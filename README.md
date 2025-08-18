@@ -164,3 +164,4 @@ For production, ensure all secrets are properly managed and rotated regularly.
 4. **Validate All Input** - Use the provided validation utilities.
 5. **Use HTTPS Everywhere** - All production deployments should use HTTPS.
 6. **Follow the Principle of Least Privilege** - Minimize permissions for all components.
+# researcher-frontend
