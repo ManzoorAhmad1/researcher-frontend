@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+
+  <!-- Basic information -->
+  <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
+  <Version>2.1.0.0</Version>
+  <ProviderName>Research Collaboration Solutions Inc.</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  
+  <!-- Requirements -->
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="WordApi" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+  
+  <!-- Display information -->
+  <DisplayName DefaultValue="Research Collaboration Hub">
+    <Override Locale="es-ES" Value="Centro de Colaboración de Investigación"/>
+    <Override Locale="fr-FR" Value="Hub de Collaboration de Recherche"/>
+  </DisplayName>
+  
+  <Description DefaultValue="Professional research collaboration tool for Microsoft Word. Streamline document review, annotation, team collaboration workflows, citation management, and real-time document sharing with advanced security features.">
+    <Override Locale="es-ES" Value="Herramienta profesional de colaboración en investigación para Microsoft Word. Optimiza la revisión de documentos, anotaciones y flujos de trabajo colaborativos."/>
+    <Override Locale="fr-FR" Value="Outil professionnel de collaboration de recherche pour Microsoft Word. Rationalisez la révision de documents et les flux de travail collaboratifs."/>
+    <Override Locale="de-DE" Value="Professionelles Forschungskooperationstool für Microsoft Word. Optimieren Sie Dokumentenüberprüfung und Arbeitsabläufe."/>
+  </Description>
+  
+  <!-- Icons -->
+  <IconUrl DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+  <HighResolutionIconUrl DefaultValue="https://research-collab-xfbh.onrender.com/icon-64.svg"/>
+  
+  <!-- Support and documentation -->
+  <SupportUrl DefaultValue="https://research-collab-xfbh.onrender.com"/>
+  <AppDomains>
+    <AppDomain>https://research-collab-xfbh.onrender.com</AppDomain>
+  </AppDomains>
+
+  <!-- Host applications -->
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+
+  <!-- Default settings -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://research-collab-xfbh.onrender.com/taskpane.html"/>
+  </DefaultSettings>
+
+  <!-- Permissions -->
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <!-- Version overrides for enhanced functionality -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <!-- Ribbon customization -->
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          
+          <FunctionFile resid="Commands.Url"/>
+          
+          <!-- Ribbon tabs -->
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="ResearchGroup">
+                <Label resid="Group.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                
+                <!-- Show task pane button -->
+                <Control xsi:type="Button" id="TaskPaneButton">
+                  <Label resid="TaskPane.Label"/>
+                  <Supertip>
+                    <Title resid="TaskPane.Label"/>
+                    <Description resid="TaskPane.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+                
+                <!-- Execute function button -->
+                <Control xsi:type="Button" id="ExecuteFunctionButton">
+                  <Label resid="ExecuteFunction.Label"/>
+                  <Supertip>
+                    <Title resid="ExecuteFunction.Label"/>
+                    <Description resid="ExecuteFunction.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="FunctionIcon.16x16"/>
+                    <bt:Image size="32" resid="FunctionIcon.32x32"/>
+                    <bt:Image size="80" resid="FunctionIcon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertAnnotation</FunctionName>
+                  </Action>
+                </Control>
+                
+                <!-- Citation manager button -->
+                <Control xsi:type="Button" id="CitationButton">
+                  <Label resid="Citation.Label"/>
+                  <Supertip>
+                    <Title resid="Citation.Label"/>
+                    <Description resid="Citation.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="CitationIcon.16x16"/>
+                    <bt:Image size="32" resid="CitationIcon.32x32"/>
+                    <bt:Image size="80" resid="CitationIcon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertCitation</FunctionName>
+                  </Action>
+                </Control>
+                
+                <!-- Document sharing menu -->
+                <Control xsi:type="Menu" id="SharingMenu">
+                  <Label resid="SharingMenu.Label"/>
+                  <Supertip>
+                    <Title resid="SharingMenu.Label"/>
+                    <Description resid="SharingMenu.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="ShareIcon.16x16"/>
+                    <bt:Image size="32" resid="ShareIcon.32x32"/>
+                    <bt:Image size="80" resid="ShareIcon.80x80"/>
+                  </Icon>
+                  <Items>
+                    <Item id="ShareWithTeam">
+                      <Label resid="ShareTeam.Label"/>
+                      <Supertip>
+                        <Title resid="ShareTeam.Label"/>
+                        <Description resid="ShareTeam.Tooltip"/>
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="TeamIcon.16x16"/>
+                        <bt:Image size="32" resid="TeamIcon.32x32"/>
+                        <bt:Image size="80" resid="TeamIcon.80x80"/>
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>shareWithTeam</FunctionName>
+                      </Action>
+                    </Item>
+                    <Item id="ExportDocument">
+                      <Label resid="Export.Label"/>
+                      <Supertip>
+                        <Title resid="Export.Label"/>
+                        <Description resid="Export.Tooltip"/>
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="ExportIcon.16x16"/>
+                        <bt:Image size="32" resid="ExportIcon.32x32"/>
+                        <bt:Image size="80" resid="ExportIcon.80x80"/>
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>exportDocument</FunctionName>
+                      </Action>
+                    </Item>
+                  </Items>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <!-- Resources section -->
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+        <bt:Image id="FunctionIcon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="FunctionIcon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="FunctionIcon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+        <bt:Image id="CitationIcon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="CitationIcon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="CitationIcon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+        <bt:Image id="ShareIcon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="ShareIcon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="ShareIcon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+        <bt:Image id="TeamIcon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="TeamIcon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="TeamIcon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+        <bt:Image id="ExportIcon.16x16" DefaultValue="https://research-collab-xfbh.onrender.com/icon-16.svg"/>
+        <bt:Image id="ExportIcon.32x32" DefaultValue="https://research-collab-xfbh.onrender.com/icon-32.svg"/>
+        <bt:Image id="ExportIcon.80x80" DefaultValue="https://research-collab-xfbh.onrender.com/icon-80.svg"/>
+      </bt:Images>
+      
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://research-collab-xfbh.onrender.com"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://research-collab-xfbh.onrender.com/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://research-collab-xfbh.onrender.com/taskpane.html"/>
+      </bt:Urls>
+      
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with Research Collaboration Hub!"/>
+        <bt:String id="Group.Label" DefaultValue="Research Tools"/>
+        <bt:String id="TaskPane.Label" DefaultValue="Open Research Hub"/>
+        <bt:String id="ExecuteFunction.Label" DefaultValue="Add Annotation"/>
+        <bt:String id="Citation.Label" DefaultValue="Insert Citation"/>
+        <bt:String id="SharingMenu.Label" DefaultValue="Share Document"/>
+        <bt:String id="ShareTeam.Label" DefaultValue="Share with Team"/>
+        <bt:String id="Export.Label" DefaultValue="Export Document"/>
+      </bt:ShortStrings>
+      
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Your Research Collaboration Hub loaded successfully. Access powerful tools from the HOME tab to enhance your document workflow and team collaboration."/>
+        <bt:String id="TaskPane.Tooltip" DefaultValue="Open the Research Collaboration Hub task pane to access advanced document management and collaboration features"/>
+        <bt:String id="ExecuteFunction.Tooltip" DefaultValue="Insert a research annotation at the current cursor position with collaborative review capabilities"/>
+        <bt:String id="Citation.Tooltip" DefaultValue="Insert properly formatted citations from your research database or create new citation entries"/>
+        <bt:String id="SharingMenu.Tooltip" DefaultValue="Access document sharing and export options for team collaboration"/>
+        <bt:String id="ShareTeam.Tooltip" DefaultValue="Share the current document with your research team members and set collaboration permissions"/>
+        <bt:String id="Export.Tooltip" DefaultValue="Export document in various formats including PDF, LaTeX, and collaborative review formats"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+
+</OfficeApp>

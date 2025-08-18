@@ -1,0 +1,48 @@
+.css-1jqq78o-placeholder {
+  font-size: 14px;
+}
+.css-t3ipsp-control {
+  border-color: #ccc !important;
+  box-shadow: none !important;
+}
+
+.dark {
+  .css-13cymwt-control {
+    background-color: #162227;
+  }
+  .css-t3ipsp-control {
+    background-color: #162227;
+  }
+  .css-1nmdiq5-menu {
+    background-color: #202d32;
+  }
+  .css-1jqq78o-placeholder {
+    color: white;
+  }
+  .css-12a83d4-MultiValueRemove .css-tj5bde-Svg path {
+    fill: black;
+  }
+  .css-166bipr-Input {
+    color: white;
+  }
+}
+
+.customQuill {
+  width: 100% !important;
+}
+
+.customQuill .ql-container {
+  height: 100px !important;
+  min-height: 100px !important;
+  max-height: 100px !important;
+  padding: 0 !important;
+}
+
+.customQuill .ql-editor {
+  height: 100px !important;
+  min-height: 100px !important;
+  max-height: 100px !important;
+  padding: 0.5rem !important;
+  overflow-y: auto;
+  border: 0.5px solid #909091;
+}

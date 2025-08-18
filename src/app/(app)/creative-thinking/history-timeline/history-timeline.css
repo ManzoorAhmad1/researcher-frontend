@@ -1,0 +1,9 @@
+.dark {
+  .bounce-in {
+    background: #142328 !important;
+    box-shadow: none;
+  }
+  .vertical-timeline::before {
+    background-color: #142328 !important;
+  }
+}

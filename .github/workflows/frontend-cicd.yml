@@ -1,0 +1,118 @@
+name: ResearchCollab Frontend CI/CD
+
+on:
+  push:
+    branches:
+      - dev-environmnet
+      - staging
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci --force
+
+      - name: Set up Sentry DSN variable
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "dev-environmnet" ]]; then
+            echo "NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN_DEV}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            echo "NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN_STAGING}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "production" ]]; then
+            echo "NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN_PROD}" >> $GITHUB_ENV
+          fi
+        env:
+          NEXT_PUBLIC_SENTRY_DSN_DEV: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_DEV }}
+          NEXT_PUBLIC_SENTRY_DSN_STAGING: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_STAGING }}
+          NEXT_PUBLIC_SENTRY_DSN_PROD: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
+
+      - name: Set up Supabase variables
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "dev-environmnet" ]]; then
+            echo "NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL_DEV}" >> $GITHUB_ENV
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY_DEV}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            echo "NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL_STAGING}" >> $GITHUB_ENV
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY_STAGING}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "production" ]]; then
+            echo "NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL_PROD}" >> $GITHUB_ENV
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY_PROD}" >> $GITHUB_ENV
+          fi
+        env:
+          NEXT_PUBLIC_SUPABASE_URL_DEV: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL_DEV }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY_DEV: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY_DEV }}
+          NEXT_PUBLIC_SUPABASE_URL_STAGING: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL_STAGING }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY_STAGING: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY_STAGING }}
+          NEXT_PUBLIC_SUPABASE_URL_PROD: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL_PROD }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY_PROD: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY_PROD }}
+
+      - name: Set up Socket.IO variables
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "dev-environmnet" ]]; then
+            echo "NEXT_PUBLIC_SOCKET_IO_URL=${NEXT_PUBLIC_SOCKET_IO_URL_DEV}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            echo "NEXT_PUBLIC_SOCKET_IO_URL=${NEXT_PUBLIC_SOCKET_IO_URL_STAGING}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "production" ]]; then
+            echo "NEXT_PUBLIC_SOCKET_IO_URL=${NEXT_PUBLIC_SOCKET_IO_URL_PROD}" >> $GITHUB_ENV
+          fi
+        env:
+          NEXT_PUBLIC_SOCKET_IO_URL_DEV: ${{ secrets.NEXT_PUBLIC_SOCKET_IO_URL_DEV }}
+          NEXT_PUBLIC_SOCKET_IO_URL_STAGING: ${{ secrets.NEXT_PUBLIC_SOCKET_IO_URL_STAGING }}
+          NEXT_PUBLIC_SOCKET_IO_URL_PROD: ${{ secrets.NEXT_PUBLIC_SOCKET_IO_URL_PROD }}
+
+      - name: Build project
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SENTRY_DSN: ${{ env.NEXT_PUBLIC_SENTRY_DSN }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ env.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ env.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_SOCKET_IO_URL: ${{ env.NEXT_PUBLIC_SOCKET_IO_URL }}
+
+      - name: Set up deployment variables
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "dev-environmnet" ]]; then
+            echo "RENDER_API_KEY=${RENDER_API_KEY_DEV_FRONTEND}" >> $GITHUB_ENV
+            echo "RENDER_SERVICE_ID=${RENDER_SERVICE_ID_DEV_FRONTEND}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            echo "RENDER_API_KEY=${RENDER_API_KEY_STAGING_FRONTEND}" >> $GITHUB_ENV
+            echo "RENDER_SERVICE_ID=${RENDER_SERVICE_ID_STAGING_FRONTEND}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "production" ]]; then
+            echo "RENDER_API_KEY=${RENDER_API_KEY_PROD_FRONTEND}" >> $GITHUB_ENV
+            echo "RENDER_SERVICE_ID=${RENDER_SERVICE_ID_PROD_FRONTEND}" >> $GITHUB_ENV
+          fi
+        env:
+          RENDER_API_KEY_DEV_FRONTEND: ${{ secrets.RENDER_API_KEY_DEV_FRONTEND }}
+          RENDER_SERVICE_ID_DEV_FRONTEND: ${{ secrets.RENDER_SERVICE_ID_DEV_FRONTEND }}
+          RENDER_API_KEY_STAGING_FRONTEND: ${{ secrets.RENDER_API_KEY_STAGING_FRONTEND }}
+          RENDER_SERVICE_ID_STAGING_FRONTEND: ${{ secrets.RENDER_SERVICE_ID_STAGING_FRONTEND }}
+          RENDER_API_KEY_PROD_FRONTEND: ${{ secrets.RENDER_API_KEY_PROD_FRONTEND }}
+          RENDER_SERVICE_ID_PROD_FRONTEND: ${{ secrets.RENDER_SERVICE_ID_PROD_FRONTEND }}
+
+      - name: Trigger Render Deploy
+        if: success()
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys" \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${RENDER_API_KEY}" \
+            -H "Content-Type: application/json"
+
+# Required secrets (set these in your GitHub repo settings):
+#   NEXT_PUBLIC_SENTRY_DSN_DEV, NEXT_PUBLIC_SENTRY_DSN_STAGING, NEXT_PUBLIC_SENTRY_DSN_PROD
+#   NEXT_PUBLIC_SUPABASE_URL_DEV, NEXT_PUBLIC_SUPABASE_ANON_KEY_DEV
+#   NEXT_PUBLIC_SUPABASE_URL_STAGING, NEXT_PUBLIC_SUPABASE_ANON_KEY_STAGING
+#   NEXT_PUBLIC_SUPABASE_URL_PROD, NEXT_PUBLIC_SUPABASE_ANON_KEY_PROD
+#   NEXT_PUBLIC_SOCKET_IO_URL_DEV, NEXT_PUBLIC_SOCKET_IO_URL_STAGING, NEXT_PUBLIC_SOCKET_IO_URL_PROD
+#   RENDER_API_KEY_DEV_FRONTEND, RENDER_SERVICE_ID_DEV_FRONTEND
+#   RENDER_API_KEY_STAGING_FRONTEND, RENDER_SERVICE_ID_STAGING_FRONTEND
+#   RENDER_API_KEY_PROD_FRONTEND, RENDER_SERVICE_ID_PROD_FRONTEND 

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Research Collaboration Hub</title>
+    
+    <!-- Office.js -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+    <!-- Styling -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            color: #666;
+            margin: 8px 0 0 0;
+            font-size: 14px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .feature-card h3 {
+            margin: 0 0 8px 0;
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            margin: 0;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .status-bar {
+            margin-top: 20px;
+            padding: 12px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #155724;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Research Collaboration Hub</h1>
+            <p>Professional research tools for Microsoft Word</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card" onclick="insertAnnotation()">
+                <h3>📝 Add Annotation</h3>
+                <p>Insert collaborative annotations with review capabilities</p>
+            </div>
+            
+            <div class="feature-card" onclick="insertCitation()">
+                <h3>📚 Insert Citation</h3>
+                <p>Add properly formatted citations from your research database</p>
+            </div>
+            
+            <div class="feature-card" onclick="shareWithTeam()">
+                <h3>👥 Share with Team</h3>
+                <p>Share document with team members and set permissions</p>
+            </div>
+            
+            <div class="feature-card" onclick="exportDocument()">
+                <h3>📤 Export Document</h3>
+                <p>Export in PDF, LaTeX, and collaborative review formats</p>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="openResearchPanel()">
+                Open Research Panel
+            </button>
+            <button class="btn btn-secondary" onclick="showDocumentStats()">
+                Document Statistics
+            </button>
+        </div>
+        
+        <div id="status" class="status-bar" style="display: none;">
+            Ready to collaborate!
+        </div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script>
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Word) {
+                document.getElementById('status').style.display = 'block';
+                console.log('Research Collaboration Hub loaded successfully');
+            }
+        });
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 2000);
+        }
+
+        function insertAnnotation() {
+            showLoading();
+            Word.run(async (context) => {
+                const range = context.document.getSelection();
+                range.insertText('[ANNOTATION: Research note added]', Word.InsertLocation.after);
+                await context.sync();
+                console.log('Annotation inserted');
+            }).catch(error => {
+                console.error('Error inserting annotation:', error);
+            });
+        }
+
+        function insertCitation() {
+            showLoading();
+            Word.run(async (context) => {
+                const range = context.document.getSelection();
+                range.insertText('[Citation: Author, Year]', Word.InsertLocation.after);
+                await context.sync();
+                console.log('Citation inserted');
+            }).catch(error => {
+                console.error('Error inserting citation:', error);
+            });
+        }
+
+        function shareWithTeam() {
+            showLoading();
+            alert('Team sharing functionality would integrate with your collaboration platform');
+        }
+
+        function exportDocument() {
+            showLoading();
+            alert('Export functionality would provide various format options');
+        }
+
+        function openResearchPanel() {
+            showLoading();
+            alert('Research panel would open with advanced tools');
+        }
+
+        function showDocumentStats() {
+            Word.run(async (context) => {
+                const body = context.document.body;
+                body.load('text');
+                await context.sync();
+                
+                const wordCount = body.text.split(/\s+/).length;
+                alert(`Document Statistics:\nWord Count: ${wordCount}\nCharacter Count: ${body.text.length}`);
+            }).catch(error => {
+                console.error('Error getting document stats:', error);
+            });
+        }
+    </script>
+</body>
+</html>

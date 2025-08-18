@@ -1,0 +1,74 @@
+.layout-page-animation {
+  transition: all 0.25s ease-in-out;
+}
+
+.layout-page {
+  padding-left: 16.25rem;
+  width: 100%;
+}
+.expand-layout-page {
+  padding-left: 5rem;
+  width: 100%;
+}
+.main-contain {
+  height: calc(100vh - 49px);
+  overflow: auto;
+}
+@media (max-width: 600px) {
+  .expand-layout-page,
+  .layout-page {
+    padding: 0;
+  }
+  .expand-menu-vertical,
+  .menu-vertical {
+    /* transform: translateX(-200rem); */
+    z-index: 12;
+    background-color: white;
+  }
+  .fullScreenMenuBtn {
+    display: none;
+  }
+  .smallScreenMenuBtn {
+    display: block;
+  }
+}
+
+.driver-popover.driverjs-theme {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title {
+  font-size: 20px;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title,
+.driver-popover.driverjs-theme .driver-popover-description,
+.driver-popover.driverjs-theme .driver-popover-progress-text {
+  color: #000;
+}
+
+.driver-popover.driverjs-theme button {
+  flex: 1;
+  text-align: center;
+  background-color: #0e70ff;
+  color: #ffffff;
+  border: 2px solid #0e70ff;
+  text-shadow: none;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-left.driver-popover-arrow,
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-right.driver-popover-arrow,
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-top.driver-popover-arrow,
+.driver-popover.driverjs-theme
+  .driver-popover-arrow-side-bottom.driver-popover-arrow {
+  display: none;
+}

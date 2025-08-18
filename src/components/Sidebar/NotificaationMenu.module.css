@@ -1,0 +1,15 @@
+.customScrollbar::-webkit-scrollbar {
+  width: 8px;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .notificationBell {
+    color: white;
+  }
+}
+
+.noWordBreak {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}

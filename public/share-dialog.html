@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Share Document with Team</h2>
+        <form>
+            <div class="form-group">
+                <label for="email">Team Member Email:</label>
+                <input type="email" id="email" placeholder="colleague@example.com">
+            </div>
+            <div class="form-group">
+                <label for="permission">Permission Level:</label>
+                <select id="permission">
+                    <option value="view">View Only</option>
+                    <option value="edit">Can Edit</option>
+                    <option value="comment">Can Comment</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Message (Optional):</label>
+                <textarea id="message" rows="3" placeholder="Add a message for your team member..."></textarea>
+            </div>
+            <button type="button" class="btn" onclick="shareDocument()">Share</button>
+            <button type="button" class="btn btn-secondary" onclick="closeDialog()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function shareDocument() {
+            const email = document.getElementById('email').value;
+            const permission = document.getElementById('permission').value;
+            const message = document.getElementById('message').value;
+            
+            if (!email) {
+                alert('Please enter an email address');
+                return;
+            }
+            
+            // This would integrate with your sharing service
+            console.log('Sharing with:', email, 'Permission:', permission, 'Message:', message);
+            alert(`Document shared with ${email} with ${permission} permissions!`);
+            closeDialog();
+        }
+        
+        function closeDialog() {
+            if (window.parent && window.parent.Office) {
+                window.parent.Office.context.ui.closeContainer();
+            }
+        }
+    </script>
+</body>
+</html>

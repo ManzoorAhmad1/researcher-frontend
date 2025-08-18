@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Research Collaboration Commands</title>
+    
+    <!-- Office.js -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        Office.onReady(() => {
+            console.log('Commands loaded successfully');
+        });
+
+        // Function to insert annotation
+        function insertAnnotation(event) {
+            Word.run(async (context) => {
+                try {
+                    const range = context.document.getSelection();
+                    const annotationText = `[ANNOTATION - ${new Date().toLocaleString()}]: Research note`;
+                    range.insertText(annotationText, Word.InsertLocation.after);
+                    
+                    // Add a comment-like styling
+                    const insertedRange = range.getRange(Word.RangeLocation.after);
+                    insertedRange.font.color = '#0078d4';
+                    insertedRange.font.italic = true;
+                    
+                    await context.sync();
+                    console.log('Annotation inserted successfully');
+                } catch (error) {
+                    console.error('Error inserting annotation:', error);
+                }
+                
+                if (event) {
+                    event.completed();
+                }
+            });
+        }
+
+        // Function to insert citation
+        function insertCitation(event) {
+            Word.run(async (context) => {
+                try {
+                    const range = context.document.getSelection();
+                    const citationText = '[Smith et al., 2024]';
+                    range.insertText(citationText, Word.InsertLocation.after);
+                    
+                    // Style the citation
+                    const insertedRange = range.getRange(Word.RangeLocation.after);
+                    insertedRange.font.color = '#006600';
+                    insertedRange.font.bold = true;
+                    
+                    await context.sync();
+                    console.log('Citation inserted successfully');
+                } catch (error) {
+                    console.error('Error inserting citation:', error);
+                }
+                
+                if (event) {
+                    event.completed();
+                }
+            });
+        }
+
+        // Function to share with team
+        function shareWithTeam(event) {
+            try {
+                // This would typically integrate with SharePoint, OneDrive, or your collaboration platform
+                console.log('Sharing document with team...');
+                
+                // For demo purposes, we'll show a notification
+                Office.context.ui.displayDialogAsync(
+                    'https://research-collab-xfbh.onrender.com/share-dialog.html',
+                    { height: 40, width: 60 },
+                    (result) => {
+                        if (result.status === Office.AsyncResultStatus.Succeeded) {
+                            console.log('Share dialog opened');
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('Error sharing document:', error);
+            }
+            
+            if (event) {
+                event.completed();
+            }
+        }
+
+        // Function to export document
+        function exportDocument(event) {
+            Word.run(async (context) => {
+                try {
+                    // Get document content
+                    const body = context.document.body;
+                    body.load('text');
+                    await context.sync();
+                    
+                    // This would typically send to your export service
+                    console.log('Exporting document...');
+                    console.log('Document content length:', body.text.length);
+                    
+                    // For demo, we'll just log the action
+                    alert('Document export initiated. Check your downloads folder.');
+                } catch (error) {
+                    console.error('Error exporting document:', error);
+                }
+                
+                if (event) {
+                    event.completed();
+                }
+            });
+        }
+
+        // Make functions available globally
+        window.insertAnnotation = insertAnnotation;
+        window.insertCitation = insertCitation;
+        window.shareWithTeam = shareWithTeam;
+        window.exportDocument = exportDocument;
+    </script>
+</body>
+</html>

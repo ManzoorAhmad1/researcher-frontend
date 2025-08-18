@@ -1,0 +1,7 @@
+.range-slider {
+  height: 4px !important;
+}
+.range-slider .range-slider__thumb {
+  width: 20px !important;
+  height: 20px !important;
+}

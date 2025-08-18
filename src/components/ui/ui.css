@@ -1,0 +1,20 @@
+.custom-placeholder::placeholder {
+  color: #cccccc;
+}
+
+.custom-placeholder-light::placeholder {
+  color: #666666;
+}
+
+.admin-custom-placeholder::placeholder {
+  color: black;
+}
+
+.admin-custom-placeholder::placeholder {
+  color: #666666;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(57, 57, 57, 0.1) inset !important;
+  backdrop-filter: none !important;
+}

@@ -1,0 +1,82 @@
+.chat-hader {
+  background-image: linear-gradient(to top left, #0f55ba, #0e70ff);
+  border-radius: 25px;
+  border: 2px solid #0e70ff;
+  box-shadow: 0px 4px 16px rgba(17, 17, 26, 0.1),
+    0px 8px 24px rgba(17, 17, 26, 0.1), 0px 16px 56px rgba(17, 17, 26, 0.1);
+  max-width: max-content;
+  padding: 5px;
+}
+
+.chat-hader-close {
+  background-image: linear-gradient(to top left, #db8606, #f59b14);
+  border-radius: 25px;
+  border: 2px solid #fdab2f;
+  box-shadow: 0px 4px 16px rgba(17, 17, 26, 0.1),
+    0px 8px 24px rgba(17, 17, 26, 0.1), 0px 16px 56px rgba(17, 17, 26, 0.1);
+  max-width: max-content;
+  padding: 5px;
+}
+
+.chat-hader-pre {
+  background-image: linear-gradient(to top left, #db8606, #f59b14);
+  border-radius: 25px;
+  border: 2px solid #fdab2f;
+  box-shadow: 0px 4px 16px rgba(17, 17, 26, 0.1),
+    0px 8px 24px rgba(17, 17, 26, 0.1), 0px 16px 56px rgba(17, 17, 26, 0.1);
+  max-width: max-content;
+  padding: 5px;
+}
+.button-full-pr {
+  padding: 5px;
+  @apply border-2 border-[#3686FC] bg-[linear-gradient(0deg,_#0F55BA_-32.81%,_#0E70FF_107.89%)] flex  rounded-full items-center justify-center gap-3 text-[13px] h-[32px] font-medium;
+}
+.chat-round-button {
+  padding: 6px 17px;
+  width: max-content !important;
+}
+
+.font-family-poppins {
+  font-family: "Poppins" !important;
+  --tw-bg-opacity: 0 !important;
+}
+
+.rpv-zoom__popover-target-scale {
+  color: #959595 !important;
+}
+.p-splitter-gutter {
+  position: relative;
+}
+.p-splitter-gutter-handle {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  left: -20px;
+  z-index: 1;
+  left: -20px;
+  background-color: #f59b14;
+  padding: 10px;
+  box-shadow: 2px 1px 13px rgba(0, 0, 0, 0.35) !important;
+  -webkit-box-shadow: -31px 3px 71px -19px rgba(0, 0, 0, 0.87);
+  -moz-box-shadow: -31px 3px 71px -19px rgba(0, 0, 0, 0.87);
+  font-weight: bold;
+  color: white;
+  border-radius: 35px;
+  cursor: ew-resize;
+}
+.p-splitter-gutter-handle::after {
+  content: "↔";
+  transform: rotate(180deg);
+  font-size: 24px;
+  font-weight: 100;
+  position: relative;
+  top: -8px;
+  left: -4px;
+}
+.p-splitter-gutter{
+  background-color: transparent;
+}
+
+.rc-slider-handle {
+  z-index: 0 !important;
+}

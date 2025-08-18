@@ -1,0 +1,22 @@
+.layout-page {
+  /* padding-left: 16.25rem; */
+  width: 100%;
+}
+.expand-layout-page {
+  padding-left: 5rem;
+  width: 100%;
+}
+.main-contain {
+  height: calc(100vh - 49px);
+  overflow: auto;
+}
+@media (max-width: 600px) {
+  .expand-layout-page,
+  .layout-page {
+    padding: 0;
+  }
+  .expand-menu-vertical,
+  .menu-vertical {
+    transform: translateX(-200rem);
+  }
+}
