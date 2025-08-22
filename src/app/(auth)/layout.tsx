@@ -1,61 +1,66 @@
-import { OptimizedImage } from "@/components/ui/optimized-image";
-import layoutBg from "@/images/layoutBg.svg";
-import Link from "next/link";
+import { useMemo } from "react";
+import { Text } from "rizzui";
 
 export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const sentences = useMemo(
+    () => [
+      "Smart Research, Simplified — Find papers that matter to your work.",
+      "Organize notes, citations and ideas in one place for faster progress.",
+      "Discover collaborators and share your findings effortlessly.",
+      "Curated recommendations tailored to your research interests.",
+      "Track the latest publications in your field without the noise.",
+      "Turn reading into action with annotatations and highlights.",
+      "Create project dashboards to manage experiments and milestones.",
+      "Search across papers, notes and projects from a single interface.",
+      "Export references and share reading lists with your team.",
+      "Save time with automated literature summarization tools.",
+      "Build a private library for reproducible research workflows.",
+      "Monitor citations and impact metrics on your work.",
+      "Stay organized with task and deadline integration built-in.",
+      "Connect your reading to code, data and notebooks seamlessly.",
+      "Maintain versioned notes so your research story stays clear.",
+      "Collaborative annotations to speed up peer feedback cycles.",
+      "Keep sensitive research private with secure sharing controls.",
+      "Smart alerts for papers that match your evolving interests.",
+      "Focus on insight, not administration — let the tool organize for you.",
+      "Integrate your reference manager and keep everything in sync.",
+      "Find gaps in literature and plan the next experiment quickly.",
+      "Capture ideas instantly with quick note creation from anywhere.",
+      "Tailored feeds that respect your focus areas and filters.",
+      "Centralize project assets: papers, data, and discussions.",
+      "Easily revisit saved searches and curated collections.",
+      "Share progress with stakeholders using concise reports.",
+      "Automate repetitive literature review tasks with smart filters.",
+      "Pin important findings and link them to your hypotheses.",
+      "Collaborative folders to manage group reading lists and tasks.",
+      "A single, distraction-free place designed for researchers.",
+    ],
+    []
+  );
+
+  // simple random sentence per visit
+  const sentence = useMemo(() => {
+    const idx = Math.floor(Math.random() * sentences.length);
+    return sentences[idx];
+  }, [sentences]);
+
   return (
-    <>
-      <div className="relative flex items-center justify-center h-screen w-full">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${layoutBg.src})`,
-            filter: "brightness(54%) contrast(63%) saturate(107%)",
-          }}
-        />
-
-        <div
-          className="grid grid-cols-1 sm:grid-cols-1 lg:max-w-[1036px] lg:grid-cols-2 relative z-10 items-center justify-center  text-center sm:m-6 m-1 rounded-lg md:grid-cols-1"
-          style={{
-            boxShadow: "rgba(0, 0, 0, 0.6) 4px 58px 36px -23px",
-            flexWrap: "wrap",
-            borderRadius: "12px",
-          }}
-        >
-          <div className=" block sm:block bg-[#D0D0D0] md:px-[80px] px-[20px] md:py-[44.5px] py-[14.5px] rounded-tl-[12px] lg:rounded-bl-[12px] md:rounded-bl-[0px] min-h-full md:rounded-tr-[12px] lg:rounded-tr-[0px] rounded-tr-[12px] md:flex flex-col md:justify-center ">
-            <div className=" flex items-center  gap-0 sm:gap-4 flex-col sm:flex-row">
-              <OptimizedImage
-                width={80}
-                height={80}
-                src={
-                  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images//researchcollab-logo%20(1).svg`
-                }
-                alt="Logo"
-                className="h-20  w-20 sm:h-24 sm:w-24"
-                layout="intrinsic"
-              />
-              <h1
-                className="font-poppins  text-[24px] font-semibold leading-[36px] text-[#333333]"
-                style={{ overflowWrap: "break-word" }}
-              >
-                <Link href={"/"}> ResearchCollab </Link>
-              </h1>
-            </div>
-            <p className="font-poppins  hidden sm:block sm:text-[15px] text-[12px] text-left font-normal leading-[22.5px] text-[#333333] md:block break-words">
-              Smart Research, Simplified. Find papers, share ideas, stay
-              organized - all in one place
-            </p>
-          </div>
-
-          <div className="md:overflow-y-auto rounded-bl-[12px] sm:rounded-bl-[0px] max-h-[70vh] overflow-y-auto md:max-h-[50vh] lg:max-h-[fit-content] sm:max-h-full  h-full ">
-            {children}
-          </div>
+    <div className="min-h-screen w-full flex flex-col-reverse lg:flex-row">
+      <main className="flex-1 w-full flex items-center justify-center p-6">
+        <div className="w-full max-w-md">{children}</div>
+      </main>
+      <aside className="w-full lg:w-1/2 bg-black text-white flex items-center justify-center p-6 h-28 lg:h-auto">
+        <div className="text-center max-w-xl">
+          <Text className="font-poppins text-base lg:text-xl font-semibold mb-4">
+            {sentence}
+          </Text>
+        
         </div>
-      </div>
-    </>
+      </aside>
+    </div>
   );
 }

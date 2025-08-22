@@ -5,9 +5,7 @@ const LoginForm = dynamic(() => import("./LoginForm"), { ssr: false });
 
 const page = () => {
   return (
-    <div>
       <LoginForm />
-    </div>
   );
 };
 export default page;

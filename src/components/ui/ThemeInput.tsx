@@ -33,7 +33,7 @@ const ThemeInput: React.FC<SearchInputProps> = ({
   return (
     <div className="relative w-full">
       {StartAdornment && (
-        <div className="absolute inset-y-0 start-0 flex items-center ps-4">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
           <StartAdornment className="text-xl" />
         </div>
       )}
@@ -43,23 +43,23 @@ const ThemeInput: React.FC<SearchInputProps> = ({
         {...register}
         value={value}
         autoComplete="off"
-        onKeyDown={onKeyDown&&onKeyDown}
+        onKeyDown={onKeyDown && onKeyDown}
         disabled={disabled}
         style={{
-          paddingRight: EndAdornment ? "28px" : undefined,
-          borderRadius: "6px",
-          borderColor: "#CCCCCC14",
+          paddingRight: EndAdornment ? "40px" : undefined,
+          borderRadius: "8px",
+          borderColor: "black",
           paddingTop: "10px",
           paddingBottom: "10px",
-          ...style
+          ...style,
         }}
         onChange={onChange}
         type={type}
-        className={`${className}custom-placeholder focus:border-white bg-transparent backdrop-blur-lg border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-12 p-2.5 placeholder-gray-400 focus:outline-none disabled:opacity-50`}
+        className={`${className ? className + ' ' : ''}custom-placeholder focus:border-black bg-white border border-black text-black text-sm rounded-lg block w-full pl-12 pr-3 p-2.5 placeholder-gray-400 focus:outline-none disabled:opacity-50`}
         placeholder={placeholder}
       />
       {EndAdornment && (
-        <div className="absolute inset-y-0 end-0 flex items-center ps-3 pe-2">
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
           <EndAdornment className="text-xl" />
         </div>
       )}
