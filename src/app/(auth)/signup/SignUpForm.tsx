@@ -224,277 +224,144 @@ export default function SignUpForm() {
   }, [lastName, errors, trigger]);
 
   return (
-    <LayoutBar>
+    <>
       <ReferralModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         referrerName={refferedName}
       />
-      <div className="rounded-bl-[12px] sm:rounded-bl-[0px] bg-[#39393933] backdrop-blur-[12px] flex sm:px-[76px] px-[16px] py-[25.5px] sm:py-[44.5px]  rounded-tr-[12px] md:rounded-tr-[12px] md:rounded-br-[12px] sm:rounded-tr-[0px]  rounded-br-[12px] sm:rounded-br-[0px] min-h-fit">
-        <div className="min-w-full">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="px-[23.5px]">
-              <h1 className="font-poppins text-[28px] font-medium leading-[42px] text-left mb-3 text-[#E5E5E5]">
-                Create an account
-              </h1>
-              <div className="mb-3">
-                <ThemeInput
-                  placeholder="First Name"
-                  register={{
-                    ...register("firstName", {
-                      required: "First Name is required.",
-                      pattern: {
-                        value: nameRegex,
-                        message:
-                          "First Name can only contain letters and spaces.",
-                      },
-                      minLength: {
-                        value: 1,
-                        message:
-                          "First Name must be at least 1 character long.",
-                      },
-                      maxLength: {
-                        value: 50,
-                        message: "First Name cannot exceed 50 characters.",
-                      },
-                    }),
-                  }}
-                  onChange={(e) => {
-                    const cleanedValue = e.target.value.replace(
-                      /[^A-Za-z\s]/g,
-                      ""
-                    );
-                    const sanitizedValue = sanitizeInput(cleanedValue);
-                    setValue("firstName", sanitizedValue, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  StartAdornment={() => (
-                    <IoIosMan
-                      color="white"
-                      style={{ height: "22px", width: "22px" }}
-                    />
-                  )}
-                />
-                {isSubmitted && errors.firstName && (
-                  <p className="text-red-500 text-left mt-1 text-sm font-black text-[#d64242]">
-                    {errors.firstName.message}
-                  </p>
-                )}
-              </div>
 
-              <div className="mb-3">
-                <ThemeInput
-                  placeholder="Last Name"
-                  register={{
-                    ...register("lastName", {
-                      required: "Last Name is required.",
-                      pattern: {
-                        value: nameRegex,
-                        message:
-                          "Last Name can only contain letters and spaces.",
-                      },
-                      minLength: {
-                        value: 1,
-                        message: "Last Name must be at least 1 character long.",
-                      },
-                      maxLength: {
-                        value: 50,
-                        message: "Last Name cannot exceed 50 characters.",
-                      },
-                    }),
-                  }}
-                  onChange={(e) => {
-                    const cleanedValue = e.target.value.replace(
-                      /[^A-Za-z\s]/g,
-                      ""
-                    );
-                    const sanitizedValue = sanitizeInput(cleanedValue);
-                    setValue("lastName", sanitizedValue, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  StartAdornment={() => (
-                    <MdOutlineMan4
-                      color="white"
-                      style={{ height: "22px", width: "22px" }}
-                    />
-                  )}
-                />
-                {isSubmitted && errors.lastName && (
-                  <p className="text-red-500 text-left mt-1 text-sm font-black text-[#d64242]">
-                    {errors.lastName.message}
-                  </p>
-                )}
-              </div>
+      <div className="flex items-center justify-center h-full w-full px-4">
+        <div className="w-full max-w-md bg-white rounded">
+          {/* Logo & Brand */}
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center justify-center space-x-3">
+              <img src="/websiteLogo.png" alt="AIScholarix Logo" className="h-20 w-auto" />
+              <span className="text-4xl font-bold text-black">AIScholarix</span>
+            </div>
+            <div className="text-center space-y-1">
+              <p className="text-sm text-gray-600 font-medium">Create an account to start your research journey</p>
+            </div>
+          </div>
 
-              <div className="mb-3">
-                <ThemeInput
-                  placeholder="Email"
-                  register={{
-                    ...register("email", {
-                      required: "Email is required.",
-                      pattern: {
-                        value: emailRegex,
-                        message: "Please enter a valid email address.",
-                      },
-                    }),
-                  }}
-                  onChange={(e) => {
-                    const cleanedValue = e.target.value.replace(/\s/g, "");
-                    const sanitizedValue = sanitizeInput(cleanedValue);
-                    setValue("email", sanitizedValue, { shouldValidate: true });
-                  }}
-                  StartAdornment={() => (
-                    <MdOutlineEmail
-                      color={inviteEmail ? "white" : "white"}
-                      style={{
-                        height: "22px",
-                        width: "22px",
-                        opacity: inviteEmail ? "1" : "1",
-                      }}
-                    />
-                  )}
-                  disabled={!!inviteEmail}
-                  style={{
-                    backgroundColor: !!inviteEmail
-                      ? "#202e33"
-                      : "rgba(255, 255, 255, 0.08)",
-                    cursor: !!inviteEmail ? "not-allowed" : "auto",
-                  }}
-                />
-                {isSubmitted && errors.email && (
-                  <p className="text-red-500 text-left mt-1 text-sm font-black text-[#d64242]">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-3">
-                <ThemeInput
-                  placeholder="Password"
-                  register={{
-                    ...register("password", {
-                      required: "Password is required.",
-                      pattern: {
-                        value: passwordRegex,
-                        message:
-                          "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character.",
-                      },
-                      minLength: {
-                        value: 8,
-                        message: "Password must be at least 8 characters long.",
-                      },
-                    }),
-                  }}
-                  onChange={(e) => {
-                    const cleanedValue = e.target.value.replace(/\s/g, "");
-                    setValue("password", cleanedValue, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  type={showPassword ? "text" : "password"}
-                  StartAdornment={() => (
-                    <FiLock
-                      color="white"
-                      style={{ height: "22px", width: "22px" }}
-                    />
-                  )}
-                  EndAdornment={() => {
-                    return showPassword ? (
-                      <FiEye
-                        color="#CCCCCC"
-                        style={{
-                          height: "22px",
-                          width: "22px",
-                          cursor: "pointer",
-                        }}
-                        onClick={manageViewPassword}
-                      />
-                    ) : (
-                      <FiEyeOff
-                        color="#CCCCCC"
-                        style={{
-                          height: "22px",
-                          width: "22px",
-                          cursor: "pointer",
-                        }}
-                        onClick={manageViewPassword}
-                      />
-                    );
-                  }}
-                />
-                {isSubmitted && errors.password && (
-                  <p className="text-red-500 text-left mt-1 text-sm font-black text-[#d64242]">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <IoIosMan size={20} />
+              </span>
+              <input
+                placeholder="First Name"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                {...register("firstName")}
+                onChange={(e) => {
+                  const cleanedValue = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                  const sanitizedValue = sanitizeInput(cleanedValue);
+                  setValue("firstName", sanitizedValue, { shouldValidate: true });
+                }}
+              />
+              {isSubmitted && errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>}
+            </div>
 
-              <div className="mb-3">
-                <ThemeInput
-                  placeholder="Confirm Password"
-                  type={"password"}
-                  register={{
-                    ...register("confirmPassword", {
-                      required: "Confirm Password is required.",
-                      validate: (value) =>
-                        value === getValues("password") ||
-                        "Passwords do not match.",
-                    }),
-                  }}
-                  onChange={(e) => {
-                    const cleanedValue = e.target.value.replace(/\s/g, "");
-                    setValue("confirmPassword", cleanedValue, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  StartAdornment={() => (
-                    <FiLock
-                      color="white"
-                      style={{ height: "22px", width: "22px" }}
-                    />
-                  )}
-                />
-                {isSubmitted && errors.confirmPassword && (
-                  <p className="text-red-500 text-left mt-1 text-sm font-black text-[#d64242]">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-              </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <MdOutlineMan4 size={20} />
+              </span>
+              <input
+                placeholder="Last Name"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                {...register("lastName")}
+                onChange={(e) => {
+                  const cleanedValue = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                  const sanitizedValue = sanitizeInput(cleanedValue);
+                  setValue("lastName", sanitizedValue, { shouldValidate: true });
+                }}
+              />
+              {isSubmitted && errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>}
+            </div>
 
-              <div className="mt-5 mb-5">
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin h-5 w-5 mx-auto" />
-                ) : (
-                  <RoundButton
-                    label={"Sign Up"}
-                    type="submit"
-                    onClick={() => {
-                      trigger();
-                    }}
-                  />
-                )}
-              </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <MdOutlineEmail size={20} />
+              </span>
+              <input
+                placeholder="Email"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                {...register("email")}
+                disabled={!!inviteEmail}
+                onChange={(e) => {
+                  const cleanedValue = e.target.value.replace(/\s/g, "");
+                  const sanitizedValue = sanitizeInput(cleanedValue);
+                  setValue("email", sanitizedValue, { shouldValidate: true });
+                }}
+              />
+              {isSubmitted && errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+            </div>
+
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <FiLock size={20} />
+              </span>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                {...register("password")}
+                onChange={(e) => {
+                  const cleanedValue = e.target.value.replace(/\s/g, "");
+                  setValue("password", cleanedValue, { shouldValidate: true });
+                }}
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" onClick={manageViewPassword}>
+                {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+              </span>
+              {isSubmitted && errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+            </div>
+
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <FiLock size={20} />
+              </span>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                {...register("confirmPassword")}
+                onChange={(e) => {
+                  const cleanedValue = e.target.value.replace(/\s/g, "");
+                  setValue("confirmPassword", cleanedValue, { shouldValidate: true });
+                }}
+              />
+              {isSubmitted && errors.confirmPassword && <p className="text-red-500 text-sm mt-1 text-center">{errors.confirmPassword.message}</p>}
+            </div>
+
+            <div className="mt-5 mb-5">
+              {isLoading ? (
+                <LoaderCircle className="animate-spin h-5 w-5 mx-auto" />
+              ) : (
+                <button type="submit" className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-900 transition" onClick={() => { trigger(); }}>
+                  Sign Up
+                </button>
+              )}
             </div>
           </form>
-          <div>
-            <Label className="text-[#E5E5E5] font-poppins text-[13px] font-normal leading-[19.5px] text-left">
-              Continue using social media
-            </Label>
-            <div className="mt-3 mb-3 flex justify-center gap-4">
+
+          <div className="mt-2">
+            <div className="flex justify-center w-full">
+              <Label className="text-gray-700 text-[13px] font-normal leading-[19.5px] text-center">
+                Continue using social media
+              </Label>
+            </div>            <div className="mt-1 mb-3 flex justify-center gap-4">
               <OAuthForm />
             </div>
-            <label>
-              <Label className="text-[#E5E5E5] font-poppins text-[13px] font-normal leading-[19.5px] text-left tracking-[1px]">
+            <label className="flex justify-center w-full items-center">
+              <Label className="text-gray-700 text-[13px] font-normal leading-[19.5px] text-left tracking-[1px]">
                 Already have account?
-                <span className="font-poppins text-[13px] font-semibold leading-[19.5px] text-left cursor-pointer">
-                  &nbsp; <Link href="/login">Login here</Link>
-                </span>
+                <span className="font-poppins text-[13px] font-semibold leading-[19.5px] text-left cursor-pointer">&nbsp; <Link href="/login">Login here</Link></span>
               </Label>
             </label>
           </div>
         </div>
       </div>
-    </LayoutBar>
+    </>
   );
 }

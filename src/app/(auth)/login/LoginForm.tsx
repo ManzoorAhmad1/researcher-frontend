@@ -25,6 +25,7 @@ import { signInApi, verify2FAApi, encryptPassword } from "@/apis/user";
 import MESSAGES from "@/constant/Messages";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { FaCheck } from "react-icons/fa";
 
 interface FormValues {
   email: string;
@@ -198,7 +199,7 @@ export default function LoginForm() {
   }, [password, errors, trigger]);
 
   return (
-   <div className="flex items-center justify-center h-full w-full px-4 py-8">
+    <div className="flex items-center justify-center h-full w-full px-4 py-8">
       <div className="w-full max-w-md bg-white space-y-6">
 
         {/* Logo & Brand */}
@@ -265,13 +266,17 @@ export default function LoginForm() {
 
           {/* Remember Me & Forgot */}
           <div className="flex justify-between text-sm">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={checkReminder}
-                onChange={manageReminder}
-                className="form-checkbox text-black"
-              />
+            <label className="flex items-center space-x-2 cursor-pointer">
+              {/* Custom Checkbox */}
+              <div
+                onClick={manageReminder}
+                className={`w-5 h-5 flex items-center justify-center rounded border 
+          ${checkReminder ? "bg-black border-black" : "bg-white border-gray-400"}`}
+              >
+                {checkReminder && <FaCheck className="text-white text-xs" />}
+              </div>
+
+              {/* Label Text */}
               <span className="text-black">Remember me</span>
             </label>
             <Link href="/forgot-password" className="text-black underline">

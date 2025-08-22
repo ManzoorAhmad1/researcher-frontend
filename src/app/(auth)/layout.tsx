@@ -50,7 +50,7 @@ export default function AuthLayout({
 
   return (
     <div className="min-h-screen w-full flex flex-col-reverse lg:flex-row">
-      <main className="flex-1 w-full flex items-center justify-center p-6">
+      <main className="flex-1 w-full flex items-center justify-center">
         <div className="w-full max-w-md">{children}</div>
       </main>
       <aside className="w-full lg:w-1/2 bg-black text-white flex items-center justify-center p-6 h-28 lg:h-auto">
