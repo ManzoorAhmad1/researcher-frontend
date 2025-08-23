@@ -7,11 +7,9 @@ import { Mail, LoaderCircle } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import RoundButton from "@/components/ui/RoundButton";
 import { signUp } from "@/reducer/auth/authSlice";
 import LayoutBar from "@/components/LayoutBar/LayoutBar";
-import RoundButton from "@/components/ui/RoundButton";
 import {
   resendVerification,
   verifyEmailUser,
@@ -192,47 +190,50 @@ const VerifyEmailForm: React.FC = () => {
 
   if (loading) {
     return (
-      <Card className="mx-auto w-11/12 lg:w-3/4 bg-[#39393933] backdrop-blur-[12px]">
-        <CardHeader>
-          <CardTitle className="font-poppins text-[28px] font-medium leading-[42px] text-left mb-8 text-[#E5E5E5] font-poppins text-2xl font-medium leading-[42px] text-center">
-            {type
-              ? "Team Invitation"
-              : org_id
-              ? "Organization Invitation"
-              : "Email Verification"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="flex items-center justify-center h-full w-full px-4 py-8">
+        <div className="w-full max-w-md bg-white space-y-6 p-6 rounded">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center justify-center space-x-3">
+              <img src="/websiteLogo.png" alt="AIScholarix Logo" className="h-20 w-auto" />
+              <span className="text-4xl font-bold text-black">AIScholarix</span>
+            </div>
+            <div className="text-center space-y-1">
+              <p className="text-sm text-gray-600 font-medium">{type ? "Team Invitation" : org_id ? "Organization Invitation" : "Email Verification"}</p>
+            </div>
+          </div>
+
           <div className="grid gap-4 text-center">
             <div className="flex justify-center">
               <Mail size={48} />
             </div>
-            <p className="text-[#E5E5E5]">
+            <p className="text-gray-700">
               {type
-                ? "Processing your team invitation..."
+                ? "Processing your team invitation... Please wait while we confirm your details and grant you access to the team."
                 : org_id
-                ? "Processing your organization invitation..."
-                : "Verifying your email..."}
+                  ? "Processing your organization invitation... We're setting up your account and linking it with the organization."
+                  : "Verifying your email... This may take a few moments while we confirm your email address."}
             </p>
+
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Card className="mx-auto w-11/12 lg:w-3/4 bg-[#39393933] backdrop-blur-[12px]">
-        <CardHeader>
-          <CardTitle className="font-poppins text-[28px] font-medium leading-[42px] text-left mb-8 text-[#E5E5E5] font-poppins text-2xl font-medium leading-[42px] text-center">
-            {type
-              ? "Team Invitation"
-              : org_id
-              ? "Organization Invitation"
-              : "Email Verification"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="flex items-center justify-center h-full w-full px-4 py-8">
+        <div className="w-full max-w-md bg-white space-y-6 p-6 rounded">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center justify-center space-x-3">
+              <img src="/websiteLogo.png" alt="AIScholarix Logo" className="h-20 w-auto" />
+              <span className="text-4xl font-bold text-black">AIScholarix</span>
+            </div>
+            {/* <div className="text-center space-y-1">
+              <p className="text-sm text-gray-600 font-medium">{type ? "Team Invitation" : org_id ? "Organization Invitation" : "Email Verification"}</p>
+            </div> */}
+          </div>
+
           <div className="grid gap-4 text-center">
             <div className="flex justify-center">
               <Mail size={48} />
@@ -241,103 +242,90 @@ const VerifyEmailForm: React.FC = () => {
               {type
                 ? "Failed to process team invitation"
                 : org_id
-                ? "Failed to process organization invitation"
-                : state
-                ? "Your email is already verified"
-                : error}
+                  ? "Failed to process organization invitation"
+                  : state
+                    ? "Your email is already verified"
+                    : error}
             </p>
             {!org_id && (
-              <Button
+              <button
                 type="button"
-                className={`mt-4 w-full ${
-                  state ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`mt-4 w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-900 transition ${state ? "opacity-50 cursor-not-allowed" : ""}`}
                 disabled={state}
                 onClick={() => resendVerifyEmail()}
               >
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin h-5 w-5 mx-auto" />
-                ) : (
-                  "Resend Verification Email"
-                )}
-              </Button>
+                {isLoading ? <LoaderCircle className="animate-spin h-5 w-5 mx-auto" /> : "Resend Verification Email"}
+              </button>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
     <LayoutBar>
-      <div className="rounded-bl-[12px] sm:rounded-bl-[0px] bg-[#39393933] backdrop-blur-[12px] flex sm:px-[76px] px-[16px] py-[44.5px] rounded-tr-[12px] md:rounded-tr-[12px] md:rounded-br-[12px] sm:rounded-tr-[0px]  rounded-br-[12px] sm:rounded-br-[0px] h-full">
-        <Card className="mx-auto w-11/12 lg:w-4/4 bg-[#39393933] backdrop-blur-[12px]">
-          <CardHeader>
-            <CardTitle className="font-poppins text-[28px] font-medium leading-[42px] mb-8 text-[#E5E5E5] font-poppins text-2xl font-medium leading-[42px] text-center">
-              {type
-                ? "Team Invitation"
-                : org_id
-                ? "Organization Invitation"
-                : "Email Verification"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 text-center">
+      <div className="flex items-center justify-center h-full w-full px-4 py-8">
+        <div className="w-full max-w-md bg-white space-y-6 p-6 rounded">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center justify-center space-x-3">
+              <img src="/websiteLogo.png" alt="AIScholarix Logo" className="h-20 w-auto" />
+              <span className="text-4xl font-bold text-black">AIScholarix</span>
+            </div>
               <div className="flex justify-center">
-                <Mail size={48} color="white" />
-              </div>
-              {!isEmailVerified ? (
-                <>
-                  <p className="text-[#ffffff]">
-                    {type
-                      ? "We're processing your team invitation. Please wait while we set up your access."
-                      : org_id
-                      ? "We're processing your organization invitation. Please wait while we set up your access."
-                      : "We have sent a verification link to your email address. Please check your inbox and follow the instructions to verify your email."}
+              <Mail size={48} />
+            </div>
+            {/* <div className="text-center space-y-1">
+              <p className="text-sm text-gray-600 font-medium text-lg">{type ? "Team Invitation" : org_id ? "Organization Invitation" : "Email Verification"}</p>
+            </div> */}
+          </div>
+
+          <div className="grid gap-4 text-center">
+            {!isEmailVerified ? (
+              <>
+                <p className="text-gray-700 max-w-lg">
+                  {type
+                    ? "We've sent you a team invitation. Please check your inbox."
+                    : org_id
+                      ? "We've sent you an organization invitation. Please check your inbox."
+                      : "We’ve sent a verification link to your email. Please check your inbox and follow the instructions."}
+                </p>
+                {!org_id && (
+                  <p className="text-gray-700">
+                    Didn’t get it?{" "}
+                    <span
+                      onClick={() => resendVerifyEmail()}
+                      className="text-blue-500 cursor-pointer"
+                    >
+                      Resend email
+                    </span>
                   </p>
-                  {!org_id && (
-                    <p className="text-[#ffffff]">
-                      If you did not receive the email, make sure to check your
-                      spam folder or{" "}
-                      <a
-                        onClick={() => resendVerifyEmail()}
-                        className="text-blue-500 cursor-pointer"
-                      >
-                        click here
-                      </a>{" "}
-                      to resend.
-                    </p>
-                  )}
-                  {isLoading && (
-                    <LoaderCircle className="animate-spin h-5 w-5 mx-auto" />
-                  )}
-                </>
-              ) : (
-                <>
-                  <p className="text-[#ffffff]">
-                    {type
-                      ? "You have successfully joined the team! You can now proceed to the dashboard."
-                      : org_id
+                )}
+                {isLoading && (
+                  <LoaderCircle className="animate-spin h-5 w-5 mx-auto" />
+                )}
+              </>
+            ) : (
+              <>
+                <p className="text-gray-700">
+                  {type
+                    ? "You have successfully joined the team! You can now proceed to the dashboard."
+                    : org_id
                       ? "You have successfully joined the organization! You can now proceed to the dashboard."
                       : "Thank you for verifying your email! You can now proceed to select your subscription plan."}
-                  </p>
-                  <div className="mt-4 w-full">
-                    <RoundButton
-                      type="button"
-                      label={"Continue"}
-                      isLoading={isLoading}
-                      onClick={() =>
-                        router.push(
-                          org_id || type ? "/dashboard" : "/subscription-plan"
-                        )
-                      }
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+                </p>
+                <div className="mt-4 w-full">
+                  <RoundButton
+                    type="button"
+                    label={"Continue"}
+                    isLoading={isLoading}
+                    onClick={() => router.push(org_id || type ? '/dashboard' : '/subscription-plan')}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </LayoutBar>
   );
